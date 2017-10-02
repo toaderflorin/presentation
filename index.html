@@ -3,18 +3,69 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="smooth.js"></script>
   <script src="puppeteer.js"></script>
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">  
 </head>
 
 <body>
-  <div class="fullpage" style="background-color: lightgray;">
+  <style>
+    .img:hover {
+      transform: scale(1.1);
+      transition: all 0.3s;
+    }
+
+    .img {
+      background-image: url("chirality.jpg");
+      background-position: center center;
+      background-size: cover;
+      height: 300px;
+      width: 300px;
+      transition: all 0.3s;
+    }
+
+    .item {
+      margin: 4px;
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      box-sizing: border-box;
+      /* box-shadow: 0 7px 15px -7px rgba(0, 0, 0, 0.7); */
+    }
+  </style>
+
+  <div class="page page-black">
+    <div style="display:flex; flex-direction: row; justify-content: center; width: 100%;" p-animation="opacity">
+      <img src="iphone.png" alt="iphone" style="height:100%;">
+      <div style="display:flex; flex-direction: column; justify-content: center; width: 640px;">
+        <div style="color: white; width: 630px; display: flex; flex-direction: column; align-items: center;" p-animation="vertical">
+          <h1>
+            Bla bla bla
+          </h1>
+          <div style="color: #bbb; text-align: center;">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+            text ever since the 1500s. book.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page page-lightgray" style="justify-content: center; align-items: center; flex-direction: column;">        
+
+    <div style="display: flex; width: 960px;">
+      <div class="item">
+        <div class="img"></div>
+      </div>
+      <div class="item">
+        <div class="img"></div>
+      </div>
+      <div class="item">
+        <div class="img"></div>
+      </div>
+    </div>
+
   </div>
 
-  <div p-screen class="fullpage center" style="background-color: yellow;">
-    <!-- <div p-delay="1200" p-animation="vertical" style="width: 100px;">
-      Some text
-    </div> -->
-  </div>
 </body>
 
 </html>

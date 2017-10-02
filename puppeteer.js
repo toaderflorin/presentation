@@ -13,6 +13,10 @@
   puppeteer._scrollDestination = -1;
   puppeteer._scrollStep = -1;
 
+  window.onwheel = function () {
+    return !puppeteer._scrolling;
+  }
+
   puppeteer._update = function () {
     puppeteer._allElementsSet.forEach(function (elem) {
       var rect = elem.getBoundingClientRect();
@@ -27,7 +31,7 @@
       } else if (puppeteer._scrollUp && rect.top > window.innerHeight) {
         elem.visible = false;
       }
-    });   
+    });
 
     puppeteer._allGroups.forEach(function (grp) {
       var rect = grp.BoundingClientRect();
@@ -53,35 +57,33 @@
       var rect = screen.getBoundingClientRect();
 
       if (rect.top < window.innerHeight && rect.top > 0 && !puppeteer._scrollUp) {
-        puppeteer._screen = screen;        
-        console.log('here');
-        puppeteer._scrollTo(rect.top);      
+        puppeteer._screen = screen;
+        puppeteer._scrollTo(puppeteer._windowOffset + rect.top);
       }
     });
   }
 
   puppeteer._scrollTo = function (destination) {
     var dist = destination - puppeteer._windowOffset;
-    var step = destination / 50;
+    var step = dist / 20;
     var count = 0;
     var pos = puppeteer._windowOffset;
     var scrolling = false;
 
-    var f = function () {
-      console.log('here2');
+    var func = function () {
       pos += step;
       window.scroll(0, pos);
       count++;
 
-      if (count < 50) {
-        setTimeout(f, 3);
+      if (count < 20) {
+        setTimeout(func, 5);
       } else {
         puppeteer._scrolling = false;
       }
-    }  
+    }
 
     if (!puppeteer._scrolling) {
-      setTimeout(f, 3);
+      setTimeout(func, 25);
       puppeteer._scrolling = true;
     }
   }
@@ -109,6 +111,11 @@
   });
 
   document.addEventListener('scroll', function (e) {
+    if (puppeteer._scrolling) {
+      console.log(e.cancelable);
+      e.preventDefault();    
+    }
+
     if (window.pageYOffset < puppeteer._windowOffset) {
       puppeteer._scrollUp = true;
     } else {
@@ -152,7 +159,7 @@
     );
   }
 
-  puppeteer.animations.blur = function (elem) {
+  puppeteer.animations.focus = function (elem) {
     var delay = parseInt(elem.getAttribute('p-delay'));
     var duration = parseInt(elem.getAttribute('p-duration'));
     var param = parseInt(elem.getAttribute('p-param'));
@@ -185,7 +192,7 @@
     );
   }
 
-  puppeteer.animations.fade = function (elem) {
+  puppeteer.animations.opacity = function (elem) {
     var delay = parseInt(elem.getAttribute('p-delay'));
     var duration = parseInt(elem.getAttribute('p-duration'));
     var param = parseInt(elem.getAttribute('p-param'));
